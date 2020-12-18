@@ -17,4 +17,12 @@ class FeedbackController extends AbstractController
             'controller_name' => 'FeedbackController',
         ]);
     }
+
+    /**
+     * @Route("/", name="home")
+     */
+    public function home(): Response
+    {
+        return $this->render('feedback/home.html.twig');
+    }
 }
