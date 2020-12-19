@@ -25,22 +25,12 @@ class Course
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Course::class, inversedBy="courses")
+     * @ORM\ManyToOne(targetEntity=Course::class, inversedBy="children")
      */
     private $parent;
 
     /**
      * @ORM\OneToMany(targetEntity=Course::class, mappedBy="parent")
-     */
-    private $courses;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Course::class, inversedBy="children")
-     */
-    private $course;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Course::class, mappedBy="course")
      */
     private $children;
 
@@ -61,7 +51,6 @@ class Course
 
     public function __construct()
     {
-        $this->courses = new ArrayCollection();
         $this->children = new ArrayCollection();
         $this->feedback = new ArrayCollection();
     }
@@ -91,48 +80,6 @@ class Course
     public function setParent(?self $parent): self
     {
         $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|self[]
-     */
-    public function getCourses(): Collection
-    {
-        return $this->courses;
-    }
-
-    public function addCourse(self $course): self
-    {
-        if (!$this->courses->contains($course)) {
-            $this->courses[] = $course;
-            $course->setParent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCourse(self $course): self
-    {
-        if ($this->courses->removeElement($course)) {
-            // set the owning side to null (unless already changed)
-            if ($course->getParent() === $this) {
-                $course->setParent(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getCourse(): ?self
-    {
-        return $this->course;
-    }
-
-    public function setCourse(?self $course): self
-    {
-        $this->course = $course;
 
         return $this;
     }

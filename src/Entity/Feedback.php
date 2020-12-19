@@ -19,7 +19,7 @@ class Feedback
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="feedback")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $author;
 
@@ -35,7 +35,7 @@ class Feedback
     private $title;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $comment;
 

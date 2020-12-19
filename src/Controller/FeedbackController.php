@@ -11,7 +11,7 @@ class FeedbackController extends AbstractController
     /**
      * @Route("/feedback", name="feedback")
      */
-    public function index(): Response
+    public function index()
     {
         return $this->render('feedback/index.html.twig', [
             'controller_name' => 'FeedbackController',
@@ -21,7 +21,7 @@ class FeedbackController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function home(): Response
+    public function home()
     {
         return $this->render('feedback/home.html.twig');
     }
