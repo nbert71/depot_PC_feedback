@@ -9,13 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
- * @UniqueEntity("email")
+ * @UniqueEntity("email", message="L'email indiqué est déjà utilisé.")
+ * @UniqueEntity("username", message="Ce username existe déjà.")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -37,8 +39,14 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min="6", minMessage="Votre mot de passe doit faire au moins 6 caractères.")
      */
     private $password;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="Vous n'avez pas indiqué le même mot de passe.")
+     */
+    public $confirm_password;
 
     /**
      * @ORM\Column(type="json", nullable=true)
@@ -187,5 +195,15 @@ class User
         }
 
         return $this;
+    }
+
+    public function eraseCredentials()
+    {
+        //blabla
+    }
+
+    public function getSalt()
+    {
+        //blabla
     }
 }
