@@ -12,6 +12,7 @@ use App\Form\RegistrationType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+
 class SecurityController extends AbstractController
 {
     /**
@@ -39,9 +40,14 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/login", name="security_login")
+     * @Route("/", name="security_login")
      */
     public function login() {
         return $this->render('security/login.html.twig');
     }
+
+    /**
+     * @Route("/logout", name="security_logout")
+     */
+    public function logout(){}
 }
