@@ -11,6 +11,12 @@ use App\Entity\User;
 use App\Form\RegistrationType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 
 class SecurityController extends AbstractController
@@ -18,13 +24,14 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="security_registration")
      */
-    public function registration(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder){
+    public function registration(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    {
         //ObjectManager n'existe plus
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
             $user->setRoles(["ROLE_USER"]);
@@ -42,12 +49,80 @@ class SecurityController extends AbstractController
     /**
      * @Route("/", name="security_login")
      */
-    public function login() {
+    public function login()
+    {
         return $this->render('security/login.html.twig');
     }
 
     /**
      * @Route("/logout", name="security_logout")
      */
-    public function logout(){}
+    public function logout()
+    {
+    }
+
+    /**
+     * @Route("/login_my", name="user_login")
+     */
+    public function index(Request $request, TokenStorageInterface $tokenStorage, SessionInterface $session, EventDispatcherInterface $dispatcher, EntityManagerInterface $manager)
+    {
+        if ($this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('home');
+        }
+
+
+        $id = $this->getParameter('oauth_id');
+        $secret = $this->getParameter('oauth_secret');
+        $base = $this->getParameter('oauth_base');
+
+        $client = new \OAuth2\Client($id, $secret);
+
+        if (!$request->query->has('code')) {
+            $url = $client->getAuthenticationUrl($base . '/oauth/v2/auth', $this->generateUrl('user_login', [], UrlGeneratorInterface::ABSOLUTE_URL));
+            return $this->redirect($url);
+        } else {
+            $params = ['code' => $request->query->get('code'), 'redirect_uri' => $this->generateUrl('user_login', [], UrlGeneratorInterface::ABSOLUTE_URL)];
+            $resp = $client->getAccessToken($base . '/oauth/v2/token', 'authorization_code', $params);
+
+            if (isset($resp['result']) && isset($resp['result']['access_token'])) {
+                $info = $resp['result'];
+
+                $client->setAccessTokenType(\OAuth2\Client::ACCESS_TOKEN_BEARER);
+                $client->setAccessToken($info['access_token']);
+                $response = $client->fetch($base . '/api/user/me');
+                $data = $response['result'];
+
+                $username = $data['username'];
+
+                $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $username]);
+                if ($user === null) { // Création de l'utilisateur s'il n'existe pas
+                    $user = new User;
+                    $user->setUsername($username);
+                    $user->setPassword(sha1(uniqid()));
+                    $user->setEmail($data['email']);
+                    $user->setLastName($data['nom']);
+                    $user->setFirstName($data['prenom']);
+                    $user->setPromo($data['promo']);
+                    $user->setRoles(['ROLE_USER']);
+
+                    $manager->persist($user);
+                    $manager->flush();
+                }
+
+                // Connexion effective de l'utilisateur
+                $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+                $tokenStorage->setToken($token);
+
+                $session->set('_security_main', serialize($token));
+
+                $event = new InteractiveLoginEvent($request, $token);
+                $dispatcher->dispatch("security.interactive_login", $event);
+
+            }
+
+            // Redirection vers l'accueil
+            return $this->redirectToRoute('home');
+        }
+
+    }
 }
