@@ -34,7 +34,16 @@
                         <button type="submit" class="btn bg-teal">Connexion</button>
                     </div>
                     <div class="col-xs-6 align-right">
-                        <a href="{{ path('security_registration') }}" class="btn bg-indigo waves-effect">Créer un compte</a>
+                        <a href="{{ path('security_registration') }}" class="btn btn-default waves-effect">
+                            <div class="color_teal">
+                                Créer un compte
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="align-center">
+                        <a href="{{ path('user_login') }}" class="btn bg-indigo waves-effect">Connexion via My</a>
                     </div>
                 </div>
             </form>

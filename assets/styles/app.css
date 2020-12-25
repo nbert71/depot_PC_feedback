@@ -9,3 +9,7 @@ body {
 .no_menu {
     margin-left: 0 !important;
 }
+
+.color_teal {
+    color: teal;
+}
