@@ -1,3 +1,11 @@
 body {
-    background-color: lightgray;
+    background-color: lightgray !important;
+}
+
+.login-page {
+    background-color: lightgray !important;
+}
+
+.no_menu {
+    margin-left: 0 !important;
 }

@@ -75,7 +75,7 @@
     </section>
 {% endif %}
 
-<section class="content">
+<section class="content {% block no_menu %}{% endblock %}">
     <div class="container-fluid">
         {% block content %}
         {% endblock %}
