@@ -13,3 +13,7 @@ body {
 .color_teal {
     color: teal;
 }
+
+#app-notifs{
+    display: none;
+}

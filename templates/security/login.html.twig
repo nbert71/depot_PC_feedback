@@ -13,6 +13,11 @@
         </div>
         <div class="body">
             <form action="{{ path('security_login')}}" method="post">
+                {% if error %}
+                    <div class="alert alert-danger">
+                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    </div>
+                {% endif %}
                 <div class="input-group">
                     <span class="input-group-addon">
                         <i class="material-icons">person</i>
@@ -49,6 +54,5 @@
             </form>
         </div>
     </div>
-
 
 {% endblock %}

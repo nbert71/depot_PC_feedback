@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Form\RegistrationType;
+use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 
@@ -27,6 +29,10 @@ class SecurityController extends AbstractController
     public function registration(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         //ObjectManager n'existe plus
+        if($this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('home');
+        };
+
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
@@ -37,6 +43,12 @@ class SecurityController extends AbstractController
             $user->setRoles(["ROLE_USER"]);
             $manager->persist($user);
             $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Ton compte a bien été créé !'
+            );
+
 
             return $this->redirectToRoute('security_login');
         }
@@ -49,10 +61,20 @@ class SecurityController extends AbstractController
     /**
      * @Route("/", name="security_login")
      */
-    public function login()
+    public function login(AuthenticationUtils $auth)
     {
-        return $this->render('security/login.html.twig');
+        if($this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('home');
+        };
+
+        // get the login error if there is one
+        $error = $auth->getLastAuthenticationError();
+        return $this->render('security/login.html.twig', [
+            'error' => $error,
+            ]
+        );
     }
+
 
     /**
      * @Route("/logout", name="security_logout")

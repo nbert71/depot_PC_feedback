@@ -7,10 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class FeedbackController extends AbstractController
 {
     /**
-     * @IsGranted("ROLE_USER")
      * @Route("/feedback", name="feedback")
      */
     public function index()
@@ -22,7 +24,6 @@ class FeedbackController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_USER")
      * @Route("/home", name="home")
      */
     public function home()
