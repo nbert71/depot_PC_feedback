@@ -11,18 +11,26 @@ class FeedbackController extends AbstractController
     /**
      * @Route("/feedback", name="feedback")
      */
-    public function index()
-    {
-        return $this->render('feedback/index.html.twig', [
-            'controller_name' => 'FeedbackController',
-        ]);
+    public function index() {
+        if ($this->isGranted('ROLE_USER')) {
+            return $this->render('feedback/index.html.twig', [
+                'controller_name' => 'FeedbackController',
+            ]);
+        }
+        else {
+            return $this->redirectToRoute('security_login');
+        }
     }
 
     /**
      * @Route("/home", name="home")
      */
-    public function home()
-    {
-        return $this->render('feedback/home.html.twig');
+    public function home() {
+        if ($this->isGranted('ROLE_USER')) {
+            return $this->render('feedback/home.html.twig');
+        }
+        else {
+            return $this->redirectToRoute('security_login');
+        }
     }
 }
