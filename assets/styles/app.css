@@ -17,3 +17,13 @@ body {
 #app-notifs{
     display: none;
 }
+
+.petit-gris{
+    color: #AAAAAA;
+    font-size: 12px;
+}
+
+.radio{
+    display: inline-block;
+    margin-right: 14px;
+}

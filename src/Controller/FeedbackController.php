@@ -46,7 +46,7 @@ class FeedbackController extends AbstractController
     /**
      * @Route("/new_feedback", name="new_feedback")
      */
-    public function newFeedback(Request $request, User $user, EntityManagerInterface $manager)
+    public function newfeedback(Request $request, EntityManagerInterface $manager)
     {
         $feedback = new Feedback();
 
@@ -56,7 +56,7 @@ class FeedbackController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //on set l'auteur et est non modéré
             $feedback->setValid(false);
-            $feedback->setAuthor($user);
+            $feedback->setAuthor($this->getUser());
 
             $manager->persist($feedback);
             $manager->flush();
@@ -79,7 +79,7 @@ class FeedbackController extends AbstractController
     /**
      * @Route("/course/{course_id}", name="course_show")
      */
-    public function courseshow(Course $course, Request $request){
-
+    public function courseshow(){
+        return $this->render('feedback/home.html.twig');
     }
 }

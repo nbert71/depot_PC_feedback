@@ -28,3 +28,16 @@ $('#app-notifs div').each(function(){
         delay: 5000
     })
 });
+
+require('ion-rangeslider');
+
+$("#slider").ionRangeSlider({
+    skin: "big",
+    min: 0,
+    max: 5,
+    step: 1,
+    type: 'single',
+    postfix: "/5",
+    grid: true,
+    grid_num: 5
+});

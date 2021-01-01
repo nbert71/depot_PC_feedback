@@ -1,22 +1,43 @@
-{% extends base.html.twig %}
+{% extends 'base.html.twig' %}
 
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block content %}
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-8 col-md-offset-2">
         <div class="card">
-            <div class="header text-center">
-                <h2>Création d'un avis</h2>
+            <div class="header text-center bg-orange">
+                <h2>Déposer un avis</h2>
             </div>
             <div class="body">
                 {{ form_start(form) }}
                 {{ form_row(form.title, {'label': 'Titre de l\'avis'}) }}
                 {{ form_row(form.course, {'label': 'Nom du Cours'}) }}
-                {{ form_row(form.overall, {'label': 'Note globale'}) }}
-                {{ form_row(form.difficulty, {'label': 'Difficulté'}) }}
-                {{ form_row(form.interest, {'label': 'Intérêt'}) }}
-                {{ form_row(form.comment, {'label': 'Avis'}) }}
-                <button type="submit" class="btn  center-block">Envoyer</button>
+
+                <div class="petit-gris">
+                    Note globale *
+                </div>
+                <div class="text-center">
+                    {{ form_row(form.overall) }}
+                </div>
+
+                <div class="petit-gris">
+                    Difficulté *
+                </div>
+                <div class="text-center">
+                    {{ form_row(form.difficulty) }}
+                </div>
+
+                <div class="petit-gris">
+                    Intérêt *
+                </div>
+                <div class="text-center">
+                    {{ form_row(form.interest) }}
+                </div>
+                <div class="petit-gris">
+                    Avis *
+                </div>
+                {{ form_row(form.comment, {'placeholder': 'Avis'}) }}
+                <button type="submit" class="btn bg-teal center-block">Déposer</button>
 
                 {{ form_end(form) }}
             </div>
