@@ -27,3 +27,16 @@ body {
     display: inline-block;
     margin-right: 14px;
 }
+
+.course_title{
+    color: #000000 !important;
+
+}
+
+.fb_title{
+    margin-bottom: 10px !important;
+}
+
+.progress{
+    margin-bottom: 5px;
+}

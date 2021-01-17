@@ -19,25 +19,18 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FeedbackController extends AbstractController
 {
-    //page qui fait je sais pas quoi encore
-    /**
-     * @Route("/feedback", name="feedback")
-     */
-    public function index()
-    {
-        return $this->render('feedback/index.html.twig', [
-            'controller_name' => 'FeedbackController',
-        ]);
-
-    }
-
-    //page d'accueil
+    //page d'accueil à modifier
     /**
      * @Route("/home", name="home")
      */
     public function home()
     {
-        return $this->render('feedback/home.html.twig');
+        $repoCourse = $this->getDoctrine()->getRepository(Course::class);
+        $courses = $repoCourse->find();
+
+        return $this->render('feedback/home.html.twig', [
+            'courses' => $courses
+        ]);
     }
 
 
@@ -67,7 +60,10 @@ class FeedbackController extends AbstractController
             );
 
             // faut rediriger vers une route qui show le cours et les autres feedback de ce cours
-            return $this->redirectToRoute('course_show', ["course_id" => $feedback->getCourse()->getId()]);
+            return $this->redirectToRoute('course_show', [
+                'course_id' => $feedback->getCourse()->getId(),
+                'course_name' => $feedback->getCourse()->getName(),
+            ]);
         }
 
         return $this->render('feedback/createFeedback.html.twig', [
@@ -75,11 +71,24 @@ class FeedbackController extends AbstractController
         ]);
     }
 
+
     //Un cours avec ses feedback
     /**
      * @Route("/course/{course_id}", name="course_show")
      */
-    public function courseshow(){
-        return $this->render('feedback/home.html.twig');
+    public function courseshow($course_id)
+    {
+        $repo = $this->getDoctrine()->getRepository(Course::class);
+        $course = $repo->find($course_id);
+        $feedbacks = $course->getFeedback();
+
+        if (!$course){
+            throw $this->createNotFoundException('Aucun cours trouvé pour l\'id '.$course_id);
+        }
+
+        return $this->render('feedback/show_course.html.twig', [
+            'course' => $course,
+            'feedbacks' => $feedbacks
+            ]);
     }
 }

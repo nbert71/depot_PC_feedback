@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <h1>Bienvenue sur le site des feedbacks !</h1>
-    <h2>Ecole centrale de Marseille</h2>
+    <h1>Liste des cours</h1>
 
-    <p>Coucou , ça marche ?</p>
-    <a href="{{ path('feedback') }}">go sur le controller</a>
+    <section>
+        {% for course in courses %}
+            <h3>{{ course.getName }}</h3>
+        {%  endfor %}
+    </section>
 
 
 {% endblock %}
