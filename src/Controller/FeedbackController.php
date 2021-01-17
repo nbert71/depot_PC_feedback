@@ -49,8 +49,12 @@ class FeedbackController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //on set l'auteur et est non modéré
             $feedback->setValid(false);
-            $feedback->setAuthor($this->getUser());
+            /*$feedback->setAuthor($this->getUser());*/
 
+            if (!($feedback->getTitle())) {
+                $texte = explode(' ', $feedback->getComment(), 4);
+                $feedback->setTitle($texte);
+            }
             $manager->persist($feedback);
             $manager->flush();
 
