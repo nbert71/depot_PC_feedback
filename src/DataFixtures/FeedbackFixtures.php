@@ -66,6 +66,7 @@ class FeedbackFixtures extends Fixture
                 for ($k = 0; $k < count($matiere); $k++) {
                     $fb = new Feedback();
                     $fb->setAuthor($user)
+                        ->setCreatedAt($faker->dateTimeThisDecade($max = 'now', $timezone = null))
                         ->setCourse($course)
                         ->setTitle($faker->realText($maxNbChars = 20, $indexSize = 2))
                         ->setComment($faker->realText($maxNbChars = 100, $indexSize = 4))

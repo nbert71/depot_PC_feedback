@@ -9,6 +9,7 @@ use App\Form\FeedbackType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,17 +26,17 @@ class FeedbackController extends AbstractController
      */
     public function home()
     {
-        $repoCourse = $this->getDoctrine()->getRepository(Course::class);
-        $courses = $repoCourse->find();
+        $repoFeedback = $this->getDoctrine()->getRepository(Feedback::class);
+        $feedbacks = $repoFeedback->findAllNew();
+
+
 
         return $this->render('feedback/home.html.twig', [
-            'courses' => $courses
+            'feedbacks' => $feedbacks
         ]);
     }
 
-
-    //Creation d'un feedback
-
+    //Creer un feedback
     /**
      * @Route("/new_feedback", name="new_feedback")
      */
@@ -95,4 +96,5 @@ class FeedbackController extends AbstractController
             'feedbacks' => $feedbacks
             ]);
     }
+
 }

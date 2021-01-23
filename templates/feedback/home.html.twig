@@ -1,13 +1,63 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <h1>Liste des cours</h1>
+    <h1 class="text-center">Bienvenue sur le site des Feedback !</h1>
 
-    <section>
-        {% for course in courses %}
-            <h3>{{ course.getName }}</h3>
-        {%  endfor %}
-    </section>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="header header_home bg-orange">
+                <h5>Derniers feedbacks</h5>
+            </div>
+            {% for feedback in feedbacks %}
+                <li class="list-group-item">
+                    <h5 class="fb_title">{{ feedback.title }}</h5>
+                    <p>{{ feedback.comment }}</p>
+                    NOTE GLOBALE :
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuemin="0"
+                             aria-valuemax="5" aria-valuenow="{{ feedback.overall }}" style="width: {% if feedback.overall==0 %}5%{% else %}
+                                     {{ 20*feedback.overall }}%{% endif %};
+                                background-color:{% if feedback.overall==5 %}#4CAF50{% elseif feedback.overall==4 %}#8BC34A;
+                                {% elseif feedback.overall==3 %}#FFC107{% elseif feedback.overall==2 %}#FF9800{% elseif feedback.overall==1 %}#FF5722
+                                {% else %}#F44336{% endif %}">
+                            {{ feedback.overall }}/5
+                        </div>
+                    </div>
 
+                    DIFFICULTE :
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuemin="0"
+                             aria-valuemax="5" aria-valuenow="{{ feedback.difficulty }}" style="width: {% if feedback.difficulty==0 %}5%{% else %}
+                                     {{ 20*feedback.difficulty }}%{% endif %};
+                                background-color:{% if feedback.difficulty==5 %}#4CAF50{% elseif feedback.difficulty==4 %}#8BC34A;
+                                {% elseif feedback.difficulty==3 %}#FFC107{% elseif feedback.difficulty==2 %}#FF9800{% elseif feedback.difficulty==1 %}#FF5722
+                                {% else %}#F44336{% endif %}">
+                            {{ feedback.difficulty }}/5
+                        </div>
+                    </div>
 
+                    INTERET :
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuemin="0"
+                             aria-valuemax="5" aria-valuenow="{{ feedback.interest }}" style="width: {% if feedback.interest==0 %}5%{% else %}
+                                     {{ 20*feedback.interest }}%{% endif %};
+                                background-color:{% if feedback.interest==5 %}#4CAF50{% elseif feedback.interest==4 %}#8BC34A;
+                                {% elseif feedback.interest==3 %}#FFC107{% elseif feedback.interest==2 %}#FF9800{% elseif feedback.interest==1 %}#FF5722
+                                {% else %}#F44336{% endif %}">
+                            {{ feedback.interest }}/5
+                        </div>
+                    </div>
+
+                </li>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="header header_home bg-orange">
+                <h5>Les meilleurs cours</h5>
+            </div>
+
+        </div>
+    </div>
 {% endblock %}

@@ -47,4 +47,17 @@ class FeedbackRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return Feedback[]
+     */
+    public function findAllNew(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->orderBy('f.createdAt', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

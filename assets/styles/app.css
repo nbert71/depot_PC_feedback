@@ -40,3 +40,7 @@ body {
 .progress{
     margin-bottom: 5px;
 }
+
+.header_home{
+    padding: 8px !important;
+}
