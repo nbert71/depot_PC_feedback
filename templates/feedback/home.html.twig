@@ -6,11 +6,17 @@
     <div class="col-md-6">
         <div class="card">
             <div class="header header_home bg-orange">
-                <h5>Derniers feedbacks</h5>
+                <h5>Derniers feedbacks ajoutés</h5>
             </div>
             {% for feedback in feedbacks %}
                 <li class="list-group-item">
-                    <h5 class="fb_title">{{ feedback.title }}</h5>
+                    <div class="fb_title align-right">
+                        Cours: <a href="{{ path('course_show', {course_id: feedback.course.id}) }}">{{ feedback.course.name }}</a>
+                    </div>
+                    <div class="fb_title">
+                        <h5>{{ feedback.title }}</h5>
+                    </div>
+
                     <p>{{ feedback.comment }}</p>
                     NOTE GLOBALE :
                     <div class="progress">
@@ -29,9 +35,9 @@
                         <div class="progress-bar" role="progressbar" aria-valuemin="0"
                              aria-valuemax="5" aria-valuenow="{{ feedback.difficulty }}" style="width: {% if feedback.difficulty==0 %}5%{% else %}
                                      {{ 20*feedback.difficulty }}%{% endif %};
-                                background-color:{% if feedback.difficulty==5 %}#4CAF50{% elseif feedback.difficulty==4 %}#8BC34A;
-                                {% elseif feedback.difficulty==3 %}#FFC107{% elseif feedback.difficulty==2 %}#FF9800{% elseif feedback.difficulty==1 %}#FF5722
-                                {% else %}#F44336{% endif %}">
+                                background-color:{% if feedback.difficulty==5 %}#F44336{% elseif feedback.difficulty==4 %}#FF5722;
+                                {% elseif feedback.difficulty==3 %}#FF9800{% elseif feedback.difficulty==2 %}#FFC107{% elseif feedback.difficulty==1 %}#8BC34A
+                                {% else %}#4CAF50{% endif %}">
                             {{ feedback.difficulty }}/5
                         </div>
                     </div>
@@ -57,6 +63,11 @@
             <div class="header header_home bg-orange">
                 <h5>Les meilleurs cours</h5>
             </div>
+            {% for course in courses %}
+                <li class="list-group-item">
+                    <h6>{{ course.name }}</h6>
+                </li>
+            {% endfor %}
 
         </div>
     </div>

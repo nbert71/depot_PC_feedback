@@ -29,20 +29,26 @@ class FeedbackController extends AbstractController
         $repoFeedback = $this->getDoctrine()->getRepository(Feedback::class);
         $feedbacks = $repoFeedback->findAllNew();
 
+        $repoCourse = $this->getDoctrine()->getRepository(Course::class);
+        $courses = $repoCourse->findBestCourses();
+
 
 
         return $this->render('feedback/home.html.twig', [
-            'feedbacks' => $feedbacks
-        ]);
+            'feedbacks' => $feedbacks,
+            'courses'   => $courses
+            ]);
     }
 
     //Creer un feedback
     /**
      * @Route("/new_feedback", name="new_feedback")
      */
-    public function newfeedback(Request $request, EntityManagerInterface $manager)
+    public function newfeedback(?Feedback $feedback, Request $request, EntityManagerInterface $manager)
     {
-        $feedback = new Feedback();
+        if ($feedback == null) {
+            $feedback = new Feedback();
+        }
 
         $form = $this->createForm(FeedbackType::class, $feedback);
         $form->handleRequest($request);
@@ -50,8 +56,12 @@ class FeedbackController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //on set l'auteur et est non modéré
             $feedback->setValid(false);
-            /*$feedback->setAuthor($this->getUser());*/
+            /*$user = $this->getUser();
+            $feedback->setAuthor($user);*/
+            $feedback->setCreatedAt(new \DateTime('now'));
 
+
+            // premier mot du comment si titre null
             if (!($feedback->getTitle())) {
                 $texte = explode(' ', $feedback->getComment(), 4);
                 $feedback->setTitle($texte);

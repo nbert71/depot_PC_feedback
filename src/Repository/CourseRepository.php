@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Course;
+use App\Entity\Feedback;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\AST\Functions\AvgFunction;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,6 +20,23 @@ class CourseRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Course::class);
     }
+
+    /**
+     * @return Course[]
+     */
+    public function findBestCourses(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.name')
+            ->innerJoin(Feedback::class, 'f', 'WITH', 'c.id = f.course')
+            ->orderBy('f.overall', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+
 
     // /**
     //  * @return Course[] Returns an array of Course objects

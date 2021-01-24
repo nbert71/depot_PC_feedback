@@ -29,9 +29,9 @@
                                 <div class="progress-bar" role="progressbar" aria-valuemin="0"
                                      aria-valuemax="5" aria-valuenow="{{ feedback.difficulty }}" style="width: {% if feedback.difficulty==0 %}5%{% else %}
                                      {{ 20*feedback.difficulty }}%{% endif %};
-                                        background-color:{% if feedback.difficulty==5 %}#4CAF50{% elseif feedback.difficulty==4 %}#8BC34A;
-                                        {% elseif feedback.difficulty==3 %}#FFC107{% elseif feedback.difficulty==2 %}#FF9800{% elseif feedback.difficulty==1 %}#FF5722
-                                        {% else %}#F44336{% endif %}">
+                                        background-color:{% if feedback.difficulty==5 %}#F44336{% elseif feedback.difficulty==4 %}#FF5722;
+                                        {% elseif feedback.difficulty==3 %}#FF9800{% elseif feedback.difficulty==2 %}#FFC107{% elseif feedback.difficulty==1 %}#8BC34A
+                                        {% else %}#4CAF50{% endif %}">
                                     {{ feedback.difficulty }}/5
                                 </div>
                             </div>
