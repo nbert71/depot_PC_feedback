@@ -45,6 +45,7 @@ class FeedbackController extends AbstractController
     /**
      * @Route("/new_feedback", name="new_feedback")
      * @Route("/edit_feedback/{id}", name="feedback_edit")
+     * @Security("is_granted('FEEDBACK_EDIT', feedback) or feedback == null")
      */
     public function newfeedback(?Feedback $feedback, Request $request, EntityManagerInterface $manager)
     {
@@ -58,8 +59,8 @@ class FeedbackController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //on set l'auteur et est non modéré
             $feedback->setValid(false);
-            /*$user = $this->getUser();
-            $feedback->setAuthor($user);*/
+            $user = $this->getUser();
+            $feedback->setAuthor($user);
             $feedback->setCreatedAt(new \DateTime('now'));
 
 
@@ -108,5 +109,18 @@ class FeedbackController extends AbstractController
             'feedbacks' => $feedbacks
             ]);
     }
+
+    /**
+     * @Route("/delete_feedback/{id}", name="delete_feedback")
+     * @Security("is_granted('FEEDBACK_EDIT', feedback)")
+     */
+    public function deleteFeedback(Feedback $feedback){
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($feedback);
+        $manager->flush();
+
+        return $this->redirectToRoute('home');      //plus tard redirect sur mes fb + flash confirm
+    }
+
 
 }

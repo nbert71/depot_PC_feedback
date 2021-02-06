@@ -27,12 +27,14 @@ class CourseRepository extends ServiceEntityRepository
     public function findBestCourses(): array
     {
         return $this->createQueryBuilder('c')
-            ->select('c.name')
             ->innerJoin(Feedback::class, 'f', 'WITH', 'c.id = f.course')
-            ->orderBy('f.overall', 'DESC')
+            ->select('c.name', 'avg(f.overall)')
+            ->groupBy('c.name')
+            ->orderBy('avg(f.overall)', 'DESC')
             ->getQuery()
             ->getResult();
     }
+
 
 
 

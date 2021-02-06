@@ -10,11 +10,13 @@
             </div>
             {% for feedback in feedbacks %}
                 <li class="list-group-item">
-                    <div class="fb_title align-right">
-                        Cours: <a href="{{ path('course_show', {course_id: feedback.course.id}) }}">{{ feedback.course.name }}</a>
-                    </div>
-                    <div class="fb_title">
-                        <h5>{{ feedback.title }}</h5>
+                    <div class="fb_title row">
+                        <div class="col-md-6">
+                            <h5>{{ feedback.title }}</h5>
+                        </div>
+                        <div class="col-md-6 align-right margin_title">
+                            Cours: <a href="{{ path('course_show', {course_id: feedback.course.id}) }}">{{ feedback.course.name }}</a>
+                        </div>
                     </div>
 
                     <p>{{ feedback.comment }}</p>
@@ -65,7 +67,7 @@
             </div>
             {% for course in courses %}
                 <li class="list-group-item">
-                    <h6>{{ course.name }}</h6>
+                    <h6>{{ course.name }} {{ course.1 }}</h6>
                 </li>
             {% endfor %}
 
