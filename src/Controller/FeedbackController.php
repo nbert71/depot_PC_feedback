@@ -9,6 +9,7 @@ use App\Form\FeedbackType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,6 +44,7 @@ class FeedbackController extends AbstractController
     //Creer un feedback
     /**
      * @Route("/new_feedback", name="new_feedback")
+     * @Route("/edit_feedback/{id}", name="feedback_edit")
      */
     public function newfeedback(?Feedback $feedback, Request $request, EntityManagerInterface $manager)
     {

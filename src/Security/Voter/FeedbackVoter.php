@@ -36,7 +36,7 @@ class FeedbackVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::FEEDBACK_EDIT:
-                return ($feedback->getAuthor() == $user) || ($this->security->isGranted('ROLE_ADMIN'));
+                return ($feedback->getAuthor() == $user) || ($this->security->isGranted('ROLE_MODO'));
 
         }
 
