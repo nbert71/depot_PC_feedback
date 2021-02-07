@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Feedback;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -60,4 +61,17 @@ class FeedbackRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+    /**
+     * @return Feedback[]
+     */
+    public function findbyuser(User $user): array
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.author = :user')
+            ->setParameter('user', $user)
+            ->orderBy('f.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

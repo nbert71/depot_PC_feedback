@@ -119,8 +119,25 @@ class FeedbackController extends AbstractController
         $manager->remove($feedback);
         $manager->flush();
 
-        return $this->redirectToRoute('home');      //plus tard redirect sur mes fb + flash confirm
+        $this->addFlash(
+            'success',
+            'Ton feedback a bien été supprimé !'
+        );
+
+        return $this->redirectToRoute('my_page');      //plus tard redirect sur mes fb + flash confirm
     }
 
+    /**
+     * @Route("/my_page", name="my_page")
+     */
+    public function myPage(){
+        $user = $this->getUser();
+        $repofb = $this->getDoctrine()->getRepository(Feedback::class);
+        $myfb = $repofb->findbyuser($user);
+
+        return $this->render('feedback/my_page.html.twig', [
+            'my_fb' => $myfb
+        ]);
+    }
 
 }

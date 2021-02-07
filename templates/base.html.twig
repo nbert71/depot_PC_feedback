@@ -43,10 +43,26 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if is_granted('ROLE_USER') %}
                     <li>
+                        <a href="{{ path('home') }}">
+                            <i class="material-icons">home</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('my_page') }}">
+                            <i class="material-icons">dashboard</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('new_feedback') }}">
+                            <i class="material-icons">add</i>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ path('security_logout') }}">
                             <i class="material-icons">power_settings_new</i>
                         </a>
                     </li>
+
                 {% endif %}
             </ul>
         </div>
