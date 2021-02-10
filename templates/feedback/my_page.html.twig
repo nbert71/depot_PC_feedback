@@ -15,6 +15,9 @@
                                     {% endif %}
                                 </div>
                                 <div class="col-md-6 text-right">
+                                    <a type="button" class="btn btn-xs bg-blue waves-effect" href="{{ path('feedback_edit', {id: feedback.id}) }}">
+                                        <i class="material-icons">update</i>
+                                    </a>
                                     <a type="button" class="btn btn-xs bg-red waves-effect" href="{{ path('delete_feedback', {id: feedback.id}) }}">
                                         <i class="material-icons">delete</i>
                                     </a>
@@ -69,6 +72,29 @@
                         </li>
                 {% endfor %}
             </div>
+    </div>
+    <div class="col-md-3 col-md-offset-1">
+        <div class="info-box bg-amber hover-expand-effect">
+            <div class="icon">
+                <i class="material-icons">book</i>
+            </div>
+            <div class="content">
+                <div class="text">Mes avis publiés</div>
+                <div class="number">{{ count_my_fb_online }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-md-offset-1">
+        <div class="info-box bg-orange hover-expand-effect">
+            <div class="icon">
+                <i class="material-icons">local_taxi</i>
+            </div>
+            <div class="content">
+                <div class="text">Mes avis en modération</div>
+                <div class="number">{{ count_my_fb_moderate }}</div>
+            </div>
+        </div>
     </div>
 
 

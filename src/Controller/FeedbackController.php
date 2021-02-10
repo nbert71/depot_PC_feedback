@@ -32,12 +32,14 @@ class FeedbackController extends AbstractController
 
         $repoCourse = $this->getDoctrine()->getRepository(Course::class);
         $courses = $repoCourse->findBestCourses();
+        $fbonline = $repoFeedback->countNbFbOnline();
 
 
 
         return $this->render('feedback/home.html.twig', [
             'feedbacks' => $feedbacks,
-            'courses'   => $courses
+            'courses'   => $courses,
+            'fb_online' => $fbonline
             ]);
     }
 
@@ -134,10 +136,46 @@ class FeedbackController extends AbstractController
         $user = $this->getUser();
         $repofb = $this->getDoctrine()->getRepository(Feedback::class);
         $myfb = $repofb->findbyuser($user);
+        $countfbonline = $repofb->countNbFbUserOnline($user);
+        $countfbmoderate = $repofb->countNbFbUserModerate($user);
 
         return $this->render('feedback/my_page.html.twig', [
-            'my_fb' => $myfb
+            'my_fb' => $myfb,
+            'count_my_fb_online' => $countfbonline,
+            'count_my_fb_moderate' => $countfbmoderate
         ]);
     }
 
+
+    /**
+     * @Route("/moderation", name="moderation")
+     * @IsGranted("ROLE_MODO")
+     */
+    public function moderation(){
+        $repofb = $this->getDoctrine()->getRepository(Feedback::class);
+        $fb_moderate = $repofb->findnonvalid();
+        $countfbmoderate = $repofb->countNbFbModerate();
+
+        return $this->render('feedback/moderation.html.twig', [
+            'fb_moderate' => $fb_moderate
+        ]);
+    }
+
+    /**
+     * @Route("/valid_feedback/{id}", name="valid_feedback")
+     * @IsGranted("ROLE_MODO")
+     */
+    public function validFeedback(Feedback $feedback){
+        $manager = $this->getDoctrine()->getManager();
+        $feedback->setValid(true);
+        $manager->persist($feedback);
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            'Le feedback a été modéré et publié !'
+        );
+
+        return $this->redirectToRoute('moderation');
+    }
 }

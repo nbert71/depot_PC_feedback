@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <h1 class="text-center margin_title_fb">Modération</h1>
+
+    {% if fb_moderate|length == 0 %}
+        <h3 class="text-center">Aucun avis à modérer pour le moment !</h3>
+        <div class="alert alert-warning">
+            Aucun avis à modérer pour le moment !
+        </div>
+    {% else %}
+
+        <div class="col-md-6 col-md-offset-3">
+            <div class="card">
+                <div class="header bg-orange text-center">
+                    <h4>Mes avis</h4>
+                </div>
+
+
+                {% for feedback in fb_moderate %}
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-6">
+                                {% if feedback.valid == false %}
+                                    <i>En attente de modération</i> ⏱️
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a type="button" class="btn btn-xs bg-green waves-effect" href="{{ path('valid_feedback', {id: feedback.id}) }}">
+                                    <i class="material-icons">done</i>
+                                </a>
+                                <a type="button" class="btn btn-xs bg-blue waves-effect" href="{{ path('feedback_edit', {id: feedback.id}) }}">
+                                    <i class="material-icons">create</i>
+                                </a>
+                                <a type="button" class="btn btn-xs bg-red waves-effect" href="{{ path('delete_feedback', {id: feedback.id}) }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>{{ feedback.title }}</h5>
+                            </div>
+                            <div class="col-md-6 align-right margin_title">
+                                Cours: <a href="{{ path('course_show', {course_id: feedback.course.id}) }}">{{ feedback.course.name }}</a>
+                            </div>
+                        </div>
+
+                        <p class="text-left">{{ feedback.comment }}</p>
+
+                        NOTE GLOBALE :
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuemin="0"
+                                 aria-valuemax="5" aria-valuenow="{{ feedback.overall }}" style="width: {% if feedback.overall==0 %}5%{% else %}
+                                         {{ 20*feedback.overall }}%{% endif %};
+                                    background-color:{% if feedback.overall==5 %}#4CAF50{% elseif feedback.overall==4 %}#8BC34A;
+                                    {% elseif feedback.overall==3 %}#FFC107{% elseif feedback.overall==2 %}#FF9800{% elseif feedback.overall==1 %}#FF5722
+                                    {% else %}#F44336{% endif %}">
+                                {{ feedback.overall }}/5
+                            </div>
+                        </div>
+
+                        DIFFICULTE :
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuemin="0"
+                                 aria-valuemax="5" aria-valuenow="{{ feedback.difficulty }}" style="width: {% if feedback.difficulty==0 %}5%{% else %}
+                                         {{ 20*feedback.difficulty }}%{% endif %};
+                                    background-color:{% if feedback.difficulty==5 %}#F44336{% elseif feedback.difficulty==4 %}#FF5722;
+                                    {% elseif feedback.difficulty==3 %}#FF9800{% elseif feedback.difficulty==2 %}#FFC107{% elseif feedback.difficulty==1 %}#8BC34A
+                                    {% else %}#4CAF50{% endif %}">
+                                {{ feedback.difficulty }}/5
+                            </div>
+                        </div>
+
+                        INTERET :
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuemin="0"
+                                 aria-valuemax="5" aria-valuenow="{{ feedback.interest }}" style="width: {% if feedback.interest==0 %}5%{% else %}
+                                         {{ 20*feedback.interest }}%{% endif %};
+                                    background-color:{% if feedback.interest==5 %}#4CAF50{% elseif feedback.interest==4 %}#8BC34A;
+                                    {% elseif feedback.interest==3 %}#FFC107{% elseif feedback.interest==2 %}#FF9800{% elseif feedback.interest==1 %}#FF5722
+                                    {% else %}#F44336{% endif %}">
+                                {{ feedback.interest }}/5
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

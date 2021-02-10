@@ -6,6 +6,7 @@ use App\Entity\Feedback;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Scalar;
 
 /**
  * @method Feedback|null find($id, $lockMode = null, $lockVersion = null)
@@ -55,6 +56,7 @@ class FeedbackRepository extends ServiceEntityRepository
     public function findAllNew(): array
     {
         return $this->createQueryBuilder('f')
+            ->where('f.valid = true')
             ->orderBy('f.createdAt', 'DESC')
             ->setMaxResults(3)
             ->getQuery()
@@ -73,5 +75,69 @@ class FeedbackRepository extends ServiceEntityRepository
             ->orderBy('f.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @return Scalar
+     */
+    public function countNbFbUserOnline(User $user)
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.author = :user')
+            ->andwhere('f.valid = true')
+            ->setParameter('user', $user)
+            ->select("COUNT(f)")
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @return Scalar
+     */
+    public function countNbFbUserModerate(User $user)
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.author = :user')
+            ->andwhere('f.valid = false')
+            ->setParameter('user', $user)
+            ->select("COUNT(f)")
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @return Scalar
+     */
+    public function countNbFbOnline()
+    {
+        return $this->createQueryBuilder('f')
+            ->andwhere('f.valid = true')
+            ->select("COUNT(f)")
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @return Feedback[]
+     */
+    public function findnonvalid(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.valid = false')
+            ->orderBy('f.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Scalar
+     */
+    public function countNbFbModerate()
+    {
+        return $this->createQueryBuilder('f')
+            ->andwhere('f.valid = false')
+            ->select("COUNT(f)")
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }
