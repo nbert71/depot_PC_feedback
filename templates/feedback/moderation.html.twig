@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block titre_page %}Modération{% endblock %}
+
 {% block content %}
 
     <h1 class="text-center margin_title_fb">Modération</h1>
 
     {% if fb_moderate|length == 0 %}
-        <h3 class="text-center">Aucun avis à modérer pour le moment !</h3>
         <div class="alert alert-warning">
             Aucun avis à modérer pour le moment !
         </div>

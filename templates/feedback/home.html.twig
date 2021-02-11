@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block titre_page %}Accueil{% endblock %}
+
 {% block content %}
     <h1 class="text-center margin_title_fb">Bienvenue sur le site des Feedback !</h1>
 
@@ -61,7 +63,7 @@
         </div>
     </div>
 
-    <div class="col-md-3 col-md-offset-1">
+    <div class="col-md-4 col-md-offset-1">
         <div class="info-box bg-teal hover-expand-effect">
             <div class="icon">
                 <i class="material-icons">book</i>
@@ -73,14 +75,14 @@
         </div>
     </div>
 
-    <div class="col-md-4 col-md-offset-1">
+    <div class="col-md-6 col-md-offset-0">
         <div class="card">
             <div class="header header_home bg-orange">
                 <h4>Les meilleurs cours</h4>
             </div>
             {% for course in courses %}
                 <li class="list-group-item">
-                    <h6>{{ course.name }} {{ course.1 }}</h6>
+                    <h6>{{ course.name }}</h6>
                 </li>
             {% endfor %}
 

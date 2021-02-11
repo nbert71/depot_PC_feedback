@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Course;
 use App\Entity\Feedback;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\AST\Functions\AvgFunction;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -35,6 +36,16 @@ class CourseRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return Query
+     */
+    public function findCourseIdQuery($course_id): Query
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.id = :course_id')
+            ->setParameter('course_id', $course_id)
+            ->getQuery();
+    }
 
 
 

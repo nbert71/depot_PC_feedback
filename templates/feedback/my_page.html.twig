@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block titre_page %}Tableau de bord{% endblock %}
+
 {% block content %}
     <div class="col-md-6 col-md-offset-1">
             <div class="card">
@@ -16,7 +18,7 @@
                                 </div>
                                 <div class="col-md-6 text-right">
                                     <a type="button" class="btn btn-xs bg-blue waves-effect" href="{{ path('feedback_edit', {id: feedback.id}) }}">
-                                        <i class="material-icons">update</i>
+                                        <i class="material-icons" >create</i>
                                     </a>
                                     <a type="button" class="btn btn-xs bg-red waves-effect" href="{{ path('delete_feedback', {id: feedback.id}) }}">
                                         <i class="material-icons">delete</i>
@@ -73,7 +75,7 @@
                 {% endfor %}
             </div>
     </div>
-    <div class="col-md-3 col-md-offset-1">
+    <div class="col-md-4 col-md-offset-1">
         <div class="info-box bg-amber hover-expand-effect">
             <div class="icon">
                 <i class="material-icons">book</i>
@@ -85,7 +87,7 @@
         </div>
     </div>
 
-    <div class="col-md-3 col-md-offset-1">
+    <div class="col-md-4 col-md-offset-1">
         <div class="info-box bg-orange hover-expand-effect">
             <div class="icon">
                 <i class="material-icons">local_taxi</i>
@@ -96,6 +98,6 @@
             </div>
         </div>
     </div>
-
+    
 
 {% endblock %}

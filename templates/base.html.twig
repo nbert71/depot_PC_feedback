@@ -9,7 +9,7 @@
     <meta name="Keywords" content="ginfo, groupe, informatique, it, association">
     <meta name="Copyright" content="GINFO">
     <meta name="Revisit-After" content="15 days">
-    <title>{% block titre_page %}Feedback{% endblock %}</title>
+    <title>{% block titre_page %}{% endblock %}</title>
     <link rel="icon" type="image/png" href="{{ asset('build/images/favicon.png') }}" />
     <link rel="stylesheet" href="{{ asset('build/vendor.css') }}" />
     <link rel="stylesheet" href="{{ asset('build/app.css') }}" />
@@ -43,30 +43,30 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if is_granted('ROLE_USER') %}
                     <li>
-                        <a href="{{ path('home') }}">
+                        <a href="{{ path('home') }}" data-toggle="tooltip" data-placement="bottom" title="Accueil">
                             <i class="material-icons">home</i>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ path('my_page') }}">
+                        <a href="{{ path('my_page') }}" data-toggle="tooltip" data-placement="bottom" title="Tableau de bord">
                             <i class="material-icons">dashboard</i>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ path('new_feedback') }}">
+                        <a href="{{ path('new_feedback') }}" data-toggle="tooltip" data-placement="bottom" title="Ajouter un avis">
                             <i class="material-icons">add</i>
                         </a>
                     </li>
                     {% if is_granted("ROLE_MODO") %}
-                    <li>
-                        <a href="{{ path('moderation') }}">
-                            <i class="material-icons">build</i>
-                        </a>
-                    </li>
+                        <li>
+                            <a href="{{ path('moderation') }}" data-toggle="tooltip" data-placement="bottom" title="Modération">
+                                <i class="material-icons">build</i>
+                            </a>
+                        </li>
                     {% endif %}
 
                     <li>
-                        <a href="{{ path('security_logout') }}">
+                        <a href="{{ path('security_logout') }}" data-toggle="tooltip" data-placement="bottom" title="Déconnexion">
                             <i class="material-icons">power_settings_new</i>
                         </a>
                     </li>
@@ -89,14 +89,9 @@
                         </a>
                     </li>
                     <li {% if app.request.pathInfo starts with "/page2" %}class="active"{% endif %}>
-                        <a href="/new_feedback" id="link_add">
+                        <a href="{{ path('new_feedback') }}" id="link_add">
                             <i class="material-icons">add</i> <span>Ajouter un feedback</span>
                         </a>
-                    </li>
-                </ul>
-                <ul class="list">
-                    <li class="header">
-                        Toutes les matières
                     </li>
                 </ul>
             </div>

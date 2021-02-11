@@ -41,3 +41,9 @@ $("#slider").ionRangeSlider({
     grid: true,
     grid_num: 5
 });
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+});
+
+
