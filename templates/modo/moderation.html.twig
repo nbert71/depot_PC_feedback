@@ -40,10 +40,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <h5>{{ feedback.title }}</h5>
                             </div>
-                            <div class="col-md-6 align-right margin_title">
+                            <div class="col-md-4 col-md-offset-1 align-right margin_title">
                                 Cours: <a href="{{ path('course_show', {course_id: feedback.course.id}) }}">{{ feedback.course.name }}</a>
                             </div>
                         </div>
@@ -62,15 +62,15 @@
                             </div>
                         </div>
 
-                        DIFFICULTE :
+                        FACILE A VALIDER :
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" aria-valuemin="0"
-                                 aria-valuemax="5" aria-valuenow="{{ feedback.difficulty }}" style="width: {% if feedback.difficulty==0 %}5%{% else %}
-                                         {{ 20*feedback.difficulty }}%{% endif %};
-                                    background-color:{% if feedback.difficulty==5 %}#F44336{% elseif feedback.difficulty==4 %}#FF5722;
-                                    {% elseif feedback.difficulty==3 %}#FF9800{% elseif feedback.difficulty==2 %}#FFC107{% elseif feedback.difficulty==1 %}#8BC34A
+                                 aria-valuemax="5" aria-valuenow="{{ feedback.facility }}" style="width: {% if feedback.facility==0 %}5%{% else %}
+                                         {{ 20*feedback.facility }}%{% endif %};
+                                    background-color:{% if feedback.facility==0 %}#F44336{% elseif feedback.facility==1 %}#FF5722;
+                                    {% elseif feedback.facility==2 %}#FF9800{% elseif feedback.facility==3 %}#FFC107{% elseif feedback.facility==4 %}#8BC34A
                                     {% else %}#4CAF50{% endif %}">
-                                {{ feedback.difficulty }}/5
+                                {{ feedback.facility }}/5
                             </div>
                         </div>
 
