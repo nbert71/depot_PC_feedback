@@ -146,36 +146,4 @@ class FeedbackController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @Route("/moderation", name="moderation")
-     * @IsGranted("ROLE_MODO")
-     */
-    public function moderation(){
-        $repofb = $this->getDoctrine()->getRepository(Feedback::class);
-        $fb_moderate = $repofb->findnonvalid();
-        $countfbmoderate = $repofb->countNbFbModerate();
-
-        return $this->render('feedback/moderation.html.twig', [
-            'fb_moderate' => $fb_moderate
-        ]);
-    }
-
-    /**
-     * @Route("/valid_feedback/{id}", name="valid_feedback")
-     * @IsGranted("ROLE_MODO")
-     */
-    public function validFeedback(Feedback $feedback){
-        $manager = $this->getDoctrine()->getManager();
-        $feedback->setValid(true);
-        $manager->persist($feedback);
-        $manager->flush();
-
-        $this->addFlash(
-            'success',
-            'Le feedback a été modéré et publié !'
-        );
-
-        return $this->redirectToRoute('moderation');
-    }
 }
