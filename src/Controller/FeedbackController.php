@@ -53,7 +53,9 @@ class FeedbackController extends AbstractController
     {
         if ($feedback == null) {
             $feedback = new Feedback();
+            $edit = false;
         }
+        else $edit = true;
 
         $form = $this->createForm(FeedbackType::class, $feedback);
         $form->handleRequest($request);
@@ -82,12 +84,13 @@ class FeedbackController extends AbstractController
             // faut rediriger vers une route qui show le cours et les autres feedback de ce cours
             return $this->redirectToRoute('course_show', [
                 'course_id' => $feedback->getCourse()->getId(),
-                'course_name' => $feedback->getCourse()->getName(),
+                'course_name' => $feedback->getCourse()->getName()
             ]);
         }
 
         return $this->render('feedback/createFeedback.html.twig', [
             'form' => $form->createView(),
+            'edit' => $edit
         ]);
     }
 

@@ -16,7 +16,6 @@ class ModoController extends AbstractController
 
     /**
      * @Route("/moderation", name="moderation")
-     * @IsGranted("ROLE_MODO")
      */
     public function moderation(){
         $repofb = $this->getDoctrine()->getRepository(Feedback::class);
@@ -30,7 +29,6 @@ class ModoController extends AbstractController
 
     /**
      * @Route("/valid_feedback/{id}", name="valid_feedback")
-     * @IsGranted("ROLE_MODO")
      */
     public function validFeedback(Feedback $feedback){
         $manager = $this->getDoctrine()->getManager();

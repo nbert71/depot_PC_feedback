@@ -39,7 +39,13 @@
                     Avis *
                 </div>
                 {{ form_row(form.comment, {'placeholder': 'Avis'}) }}
-                <button type="submit" class="btn bg-teal center-block">Déposer</button>
+                <button type="submit" class="btn bg-teal center-block">
+                    {% if edit == true %}
+                        Modifier
+                    {% else %}
+                        Déposer
+                    {% endif %}
+                </button>
 
                 {{ form_end(form) }}
             </div>
