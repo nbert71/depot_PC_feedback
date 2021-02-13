@@ -58,6 +58,12 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <span class="toutpetit">Publié le : {{ feedback.createdAt|date("d/m/Y") }} par {{ feedback.author.firstName }}
+                                {{ feedback.author.lastName }}</span>
+                        </div>
+                    </div>
                 </li>
             {% endfor %}
         </div>
@@ -83,8 +89,8 @@
         <div class="list-group">
             {% for course in courses %}
                 <li class="list-group-item">
-                    {{ course.name }}
-                    <span class="badge bg-teal">{{ course.1 }} / 5</span>
+                    <a href="{{ path('course_show', {course_id: course.id}) }}">{{ course.name }}</a>
+                    <span class="badge bg-teal">{{ course.1|number_format(2) }} / 5</span>
                 </li>
             {% endfor %}
         </div>

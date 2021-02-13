@@ -9,53 +9,101 @@
             <div class="header text-center bg-orange">
                 <h2 class="course_title"><b> {{ course.getName }}</b></h2>
             </div>
-            <div class="body">
-                {% for feedback in feedbacks %}
-                    {% if feedback.valid == true %}    {# peut etre pas le plus sûre, les commentaires non valide font partie de la requête#}
-                        <div class="card">
-                            <li class="list-group-item">
-                                <h5 class="fb_title">{{ feedback.title }}</h5>
-                                <p>{{ feedback.comment }}</p>
-                                NOTE GLOBALE :
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuemin="0"
-                                         aria-valuemax="5" aria-valuenow="{{ feedback.overall }}" style="width: {% if feedback.overall==0 %}5%{% else %}
-                                         {{ 20*feedback.overall }}%{% endif %};
-                                            background-color:{% if feedback.overall==5 %}#4CAF50{% elseif feedback.overall==4 %}#8BC34A;
-                                            {% elseif feedback.overall==3 %}#FFC107{% elseif feedback.overall==2 %}#FF9800{% elseif feedback.overall==1 %}#FF5722
-                                            {% else %}#F44336{% endif %}">
-                                        {{ feedback.overall }}/5
-                                    </div>
-                                </div>
 
-                                FACILITE :
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuemin="0"
-                                         aria-valuemax="5" aria-valuenow="{{ feedback.facility }}" style="width: {% if feedback.facility==0 %}5%{% else %}
-                                         {{ 20*feedback.facility }}%{% endif %};
-                                            background-color:{% if feedback.facility==0 %}#F44336{% elseif feedback.facility==1 %}#FF5722;
-                                            {% elseif feedback.facility==2 %}#FF9800{% elseif feedback.facility==3 %}#FFC107{% elseif feedback.facility==4 %}#8BC34A
-                                            {% else %}#4CAF50{% endif %}">
-                                        {{ feedback.facility }}/5
-                                    </div>
-                                </div>
+            {% for feedback in feedbacks %}
+                {% if feedback.valid == true %}    {# peut etre pas le plus sûre, les commentaires non valide font partie de la requête#}
 
-                                INTERET :
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuemin="0"
-                                         aria-valuemax="5" aria-valuenow="{{ feedback.interest }}" style="width: {% if feedback.interest==0 %}5%{% else %}
-                                         {{ 20*feedback.interest }}%{% endif %};
-                                            background-color:{% if feedback.interest==5 %}#4CAF50{% elseif feedback.interest==4 %}#8BC34A;
-                                            {% elseif feedback.interest==3 %}#FFC107{% elseif feedback.interest==2 %}#FF9800{% elseif feedback.interest==1 %}#FF5722
-                                            {% else %}#F44336{% endif %}">
-                                        {{ feedback.interest }}/5
-                                    </div>
+                    <li class="list-group-item">
+
+                        <div class="row">
+                            <div class="col-md-9 fb_title">
+                                <h5>{{ feedback.title }}</h5>
+                            </div>
+                            {% if feedback.author == user %}
+                                <div class="col-md-3 text-right">
+                                    <a type="button" class="btn btn-xs bg-blue waves-effect" href="{{ path('feedback_edit', {id: feedback.id}) }}">
+                                        <i class="material-icons" >create</i>
+                                    </a>
+                                    <a type="button" class="btn btn-xs bg-red waves-effect" data-toggle="modal" data-target="#pocpoc">
+                                        <i class="material-icons">delete</i>
+                                    </a>
                                 </div>
-                            </li>
+                            {% endif %}
                         </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
+
+
+                        <p>{{ feedback.comment }}</p>
+                        NOTE GLOBALE :
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuemin="0"
+                                 aria-valuemax="5" aria-valuenow="{{ feedback.overall }}" style="width: {% if feedback.overall==0 %}5%{% else %}
+                                         {{ 20*feedback.overall }}%{% endif %};
+                                    background-color:{% if feedback.overall==5 %}#4CAF50{% elseif feedback.overall==4 %}#8BC34A;
+                                    {% elseif feedback.overall==3 %}#FFC107{% elseif feedback.overall==2 %}#FF9800{% elseif feedback.overall==1 %}#FF5722
+                                    {% else %}#F44336{% endif %}">
+                                {{ feedback.overall }}/5
+                            </div>
+                        </div>
+
+                        FACILITE :
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuemin="0"
+                                 aria-valuemax="5" aria-valuenow="{{ feedback.facility }}" style="width: {% if feedback.facility==0 %}5%{% else %}
+                                         {{ 20*feedback.facility }}%{% endif %};
+                                    background-color:{% if feedback.facility==0 %}#F44336{% elseif feedback.facility==1 %}#FF5722;
+                                    {% elseif feedback.facility==2 %}#FF9800{% elseif feedback.facility==3 %}#FFC107{% elseif feedback.facility==4 %}#8BC34A
+                                    {% else %}#4CAF50{% endif %}">
+                                {{ feedback.facility }}/5
+                            </div>
+                        </div>
+
+                        INTERET :
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuemin="0"
+                                 aria-valuemax="5" aria-valuenow="{{ feedback.interest }}" style="width: {% if feedback.interest==0 %}5%{% else %}
+                                         {{ 20*feedback.interest }}%{% endif %};
+                                    background-color:{% if feedback.interest==5 %}#4CAF50{% elseif feedback.interest==4 %}#8BC34A;
+                                    {% elseif feedback.interest==3 %}#FFC107{% elseif feedback.interest==2 %}#FF9800{% elseif feedback.interest==1 %}#FF5722
+                                    {% else %}#F44336{% endif %}">
+                                {{ feedback.interest }}/5
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                        <span class="toutpetit">Publié le : {{ feedback.createdAt|date("d/m/Y") }} par {{ feedback.author.firstName }}
+                                            {{ feedback.author.lastName }}</span>
+                            </div>
+                        </div>
+                    </li>
+                {% endif %}
+
+                <div class="modal fade " id="pocpoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content modal-col-red">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Suppression</h5>
+                            </div>
+                            <div class="modal-body">
+                                Etes-vous sûr de vouloir supprimer cet avis ?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Annuler</button>
+                                <button type="button" class="btn btn-link waves-effect " href="{{ path('delete_feedback', {id: feedback.id}) }}">
+                                    SUPPRIMER
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
         </div>
     </div>
+
+    <div class="text-center ">
+        <div class="pagination m-t--30">
+            {{ knp_pagination_render(feedbacks) }}
+        </div>
+    </div>
+
 {% endblock %}

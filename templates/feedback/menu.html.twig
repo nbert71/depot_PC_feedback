@@ -1,0 +1,16 @@
+<li {% if app.request.pathInfo starts with "/course" %}class="active"{% endif %}>
+
+    <a href="/" class="waves-effect waves-block menu-toggle">
+        <i class="material-icons">folder</i>
+        <span>Cours trop cool</span>
+    </a>
+    <ul class="ml-menu" style="display: block">
+
+        {% for c in courses %}
+            <li>
+                <a href="{{ path('course_show', {course_id: c.id}) }}" class="waves-effect waves-block" >{{ c.name }}</a>
+            </li>
+        {% endfor %}
+
+    </ul>
+</li>

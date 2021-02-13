@@ -7,6 +7,7 @@ use App\Entity\Feedback;
 use App\Entity\User;
 use App\Form\FeedbackType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -42,6 +43,20 @@ class FeedbackController extends AbstractController
             'fb_online' => $fbonline
             ]);
     }
+
+    /**
+     * @Route("/menu", name="menu")
+     */
+    public function menu()
+    {
+        $repoCourse = $this->getDoctrine()->getRepository(Course::class);
+        $courses = $repoCourse->findAll();
+
+        return $this->render('feedback/menu.html.twig', [
+            'courses' => $courses
+        ]);
+    }
+
 
     //Creer un feedback
     /**
@@ -102,11 +117,21 @@ class FeedbackController extends AbstractController
     /**
      * @Route("/course/{course_id}", name="course_show")
      */
-    public function courseshow($course_id)
+    public function courseshow($course_id, PaginatorInterface $paginator, Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Course::class);
+        $repofb = $this->getDoctrine()->getRepository(Feedback::class);
+
         $course = $repo->find($course_id);
-        $feedbacks = $course->getFeedback();
+
+        $feedbacks = $paginator->paginate(
+            $repofb->getFbDate($course),  //query
+            $request->query->getInt('page', 1), // page number
+            10  //nombre sur une page
+        );
+        $user = $this->getUser();
+
+
 
         if (!$course){
             throw $this->createNotFoundException('Aucun cours trouvé pour l\'id '.$course_id);
@@ -114,7 +139,8 @@ class FeedbackController extends AbstractController
 
         return $this->render('feedback/show_course.html.twig', [
             'course' => $course,
-            'feedbacks' => $feedbacks
+            'feedbacks' => $feedbacks,
+            'user' => $user
             ]);
     }
 
@@ -138,10 +164,14 @@ class FeedbackController extends AbstractController
     /**
      * @Route("/my_page", name="my_page")
      */
-    public function myPage(){
+    public function myPage(Request $request, PaginatorInterface $paginator){
         $user = $this->getUser();
         $repofb = $this->getDoctrine()->getRepository(Feedback::class);
-        $myfb = $repofb->findbyuser($user);
+        $myfb = $paginator->paginate(
+            $repofb->findbyuser($user),
+            $request->query->getInt('page', 1),
+            10
+        );
         $countfbonline = $repofb->countNbFbUserOnline($user);
         $countfbmoderate = $repofb->countNbFbUserModerate($user);
 

@@ -83,11 +83,25 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">Menu</li>
-                    <li {% if app.request.pathInfo starts with "/page2" %}class="active"{% endif %}>
+                    <li>
                         <a href="{{ path('new_feedback') }}" id="link_add">
                             <i class="material-icons">add</i> <span>Ajouter un feedback</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ path('my_page') }}" id="link_add">
+                            <i class="material-icons">dashboard</i> <span>Tableau de bord</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('moderation') }}" id="link_add">
+                            <i class="material-icons">build</i> <span>Modération</span>
+                        </a>
+                    </li>
+
+                    <li class="header">Liste des matières</li>
+                    {{ render(controller('App\\Controller\\FeedbackController::menu')) }}
+
                 </ul>
             </div>
         </aside>

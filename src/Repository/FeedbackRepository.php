@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Course;
 use App\Entity\Feedback;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use phpDocumentor\Reflection\Types\Scalar;
 
@@ -65,16 +67,15 @@ class FeedbackRepository extends ServiceEntityRepository
 
 
     /**
-     * @return Feedback[]
+     * @return Query
      */
-    public function findbyuser(User $user): array
+    public function findbyuser(User $user): Query
     {
         return $this->createQueryBuilder('f')
             ->where('f.author = :user')
             ->setParameter('user', $user)
             ->orderBy('f.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
     }
 
     /**
@@ -139,5 +140,17 @@ class FeedbackRepository extends ServiceEntityRepository
             ->select("COUNT(f)")
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * @return Query
+     */
+    public function getFbDate($course): Query
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.course = :course')
+            ->setParameter('course', $course)
+            ->orderBy('f.createdAt', 'DESC')
+            ->getQuery();
     }
 }

@@ -12,7 +12,7 @@
         </div>
     {% else %}
 
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-8 col-md-offset-2">
             <div class="card">
                 <div class="header bg-orange text-center">
                     <h4>Mes avis</h4>
@@ -34,16 +34,16 @@
                                 <a type="button" class="btn btn-xs bg-blue waves-effect" href="{{ path('feedback_edit', {id: feedback.id}) }}">
                                     <i class="material-icons">create</i>
                                 </a>
-                                <a type="button" class="btn btn-xs bg-red waves-effect" href="{{ path('delete_feedback', {id: feedback.id}) }}">
+                                <button type="button" class="btn btn-xs bg-red waves-effect" data-toggle="modal" data-target="#pocpoc">
                                     <i class="material-icons">delete</i>
-                                </a>
+                                </button>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <h5>{{ feedback.title }}</h5>
                             </div>
-                            <div class="col-md-4 col-md-offset-1 align-right margin_title">
+                            <div class="col-md-5 col-md-offset-1 align-right margin_title">
                                 Cours: <a href="{{ path('course_show', {course_id: feedback.course.id}) }}">{{ feedback.course.name }}</a>
                             </div>
                         </div>
@@ -85,10 +85,45 @@
                                 {{ feedback.interest }}/5
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                            <span class="toutpetit">Publié le : {{ feedback.createdAt|date("d/m/Y") }} par {{ feedback.author.firstName }}
+                                {{ feedback.author.lastName }}</span>
+                            </div>
+                        </div>
                     </li>
+
+
+
+                    <div class="modal fade " id="pocpoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content modal-col-red">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Suppression</h5>
+                                </div>
+                                <div class="modal-body">
+                                    Etes-vous sûr de vouloir supprimer cet avis ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Annuler</button>
+                                    <button type="button" class="btn btn-link waves-effect " href="{{ path('delete_feedback', {id: feedback.id}) }}">
+                                        SUPPRIMER
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 {% endfor %}
             </div>
         </div>
     {% endif %}
+
+    <div class="text-center ">
+        <div class="pagination m-t--30">
+            {{ knp_pagination_render(fb_moderate) }}
+        </div>
+    </div>
 
 {% endblock %}

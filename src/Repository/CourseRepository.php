@@ -29,8 +29,8 @@ class CourseRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->innerJoin(Feedback::class, 'f', 'WITH', 'c.id = f.course')
-            ->select('c.name', 'avg(f.overall)')
-            ->groupBy('c.name')
+            ->select('c.id', 'c.name', 'avg(f.overall)')
+            ->groupBy('c.name', 'c.id')
             ->orderBy('avg(f.overall)', 'DESC')
             ->getQuery()
             ->getResult();
@@ -47,6 +47,19 @@ class CourseRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
+    /**
+     * @return Course[]
+     */
+    public function findLatestCourses($course_id)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.id = :course_id')
+            ->innerJoin(Feedback::class, 'f', 'WITH', 'c.id = f.course')
+            ->setParameter('course_id', $course_id)
+            ->orderBy('f.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
 
 
