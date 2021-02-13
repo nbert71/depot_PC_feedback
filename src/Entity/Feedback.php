@@ -47,7 +47,7 @@ class Feedback
     /**
      * @ORM\Column(type="smallint")
      */
-    private $difficulty;
+    private $facility;
 
     /**
      * @ORM\Column(type="smallint")
@@ -129,14 +129,14 @@ class Feedback
         return $this;
     }
 
-    public function getDifficulty(): ?int
+    public function getFacility(): ?int
     {
-        return $this->difficulty;
+        return $this->facility;
     }
 
-    public function setDifficulty(int $difficulty): self
+    public function setFacility(int $facility): self
     {
-        $this->difficulty = $difficulty;
+        $this->facility = $facility;
 
         return $this;
     }

@@ -39,14 +39,14 @@ class FeedbackType extends AbstractType
                 'expanded' => true,
                 'multiple' => false
             ])
-            ->add('difficulty', ChoiceType::class, [
+            ->add('facility', ChoiceType::class, [
                 'choices' => [
-                    'Très facile' => 0,
-                    'Facile' => 1,
-                    'Moyen' => 2,
-                    'Difficile' => 3,
-                    'Très difficile' => 4,
-                    'Diabolique' => 5,
+                    'Diabolique' => 0,
+                    'Très difficile' => 1,
+                    'Difficile' => 2,
+                    'Moyen' => 3,
+                    'Facile' => 4,
+                    'Très facile' => 5,
                 ],
                 'choice_attr' => [
                     'Très facile' => ['class' => 'radio-col-green'],

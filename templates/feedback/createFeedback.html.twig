@@ -23,10 +23,10 @@
                 </div>
 
                 <div class="petit-gris">
-                    Difficulté *
+                    Facilité *
                 </div>
                 <div class="text-center">
-                    {{ form_row(form.difficulty) }}
+                    {{ form_row(form.facility) }}
                 </div>
 
                 <div class="petit-gris">
@@ -46,6 +46,11 @@
                         Déposer
                     {% endif %}
                 </button>
+                <h5 class="text-center m-b--10">
+                    {% if edit == true %}
+                        Attention, après modification l'avis sera de nouveau soumis à la modération !
+                    {% endif %}
+                </h5>
 
                 {{ form_end(form) }}
             </div>

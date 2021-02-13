@@ -22,7 +22,7 @@ class ModoController extends AbstractController
         $fb_moderate = $repofb->findnonvalid();
         $countfbmoderate = $repofb->countNbFbModerate();
 
-        return $this->render('feedback/moderation.html.twig', [
+        return $this->render('modo/moderation.html.twig', [
             'fb_moderate' => $fb_moderate
         ]);
     }

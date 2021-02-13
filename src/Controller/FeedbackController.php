@@ -65,7 +65,10 @@ class FeedbackController extends AbstractController
             $feedback->setValid(false);
             $user = $this->getUser();
             $feedback->setAuthor($user);
-            $feedback->setCreatedAt(new \DateTime('now'));
+
+            if ($edit == false) {
+                $feedback->setCreatedAt(new \DateTime('now'));
+            }
 
 
             // premier mot du comment si titre null
