@@ -8,7 +8,13 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="card">
             <div class="header text-center bg-orange">
-                <h2>Déposer un avis</h2>
+                <h2>{% if edit == true %}
+                        Modifier un avis
+                    {% else %}
+                        Déposer un avis
+                    {% endif %}
+
+                </h2>
             </div>
             <div class="body">
                 {{ form_start(form) }}
@@ -49,6 +55,8 @@
                 <h5 class="text-center m-b--10">
                     {% if edit == true %}
                         Attention, après modification l'avis sera de nouveau soumis à la modération !
+                    {% else %}
+                        Attention, avant d'être publié ton sera soumis à la modération !
                     {% endif %}
                 </h5>
 
