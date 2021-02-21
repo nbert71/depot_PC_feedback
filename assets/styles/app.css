@@ -66,3 +66,15 @@ body {
     padding-top: 10px !important;
     padding-bottom: 10px !important;
 }
+
+.btn-green{
+    color : green;
+}
+
+.btn-amber{
+    color : #FFC107;
+}
+
+.btn-red{
+    color: red;
+}

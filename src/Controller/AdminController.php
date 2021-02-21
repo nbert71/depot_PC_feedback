@@ -24,6 +24,7 @@ class AdminController extends AbstractController
         $repoUser = $this->getDoctrine()->getRepository(User::class);
         $nbuser = $repoUser->count_user();
         $users = $repoUser->findAll();
+        $userOnline = $this->getUser();
 
         $repofb = $this->getDoctrine()->getRepository(Feedback::class);
         $fb_online = $repofb->countNbFbOnline();
@@ -34,7 +35,8 @@ class AdminController extends AbstractController
                 'count_user' => $nbuser,
                 'count_fb_online' => $fb_online,
                 'count_fb_moderate' => $fb_moderate,
-                'users' => $users
+                'users' => $users,
+                'userOnline' => $userOnline
             ]);
     }
 

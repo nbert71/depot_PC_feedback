@@ -4,81 +4,97 @@
 
 {% block content %}
     <h1 class="text-center margin_title_fb">Administration</h1>
-
-    <div class="col-md-4">
-        <div class="info-box-3 bg-orange hover-zoom-effect">
-            <div class="icon">
-                <i class="material-icons">person</i>
-            </div>
-            <div class="content">
-                <div class="text">Nombre d'utilisateurs</div>
-                <div class="number">{{ count_user }}</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="info-box-3 bg-amber hover-zoom-effect">
-            <div class="icon">
-                <i class="material-icons">book</i>
-            </div>
-            <div class="content">
-                <div class="text">Nombre d'avis publiés</div>
-                <div class="number">{{ count_fb_online }}</div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="info-box-3 bg-orange hover-zoom-effect">
+                <div class="icon">
+                    <i class="material-icons">person</i>
+                </div>
+                <div class="content">
+                    <div class="text">Nombre d'utilisateurs</div>
+                    <div class="number">{{ count_user }}</div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="info-box-3 bg-yellow hover-zoom-effect">
-            <div class="icon">
-                <i class="material-icons">security</i>
-            </div>
-            <div class="content">
-                <div class="text">Nombre d'avis en modération</div>
-                <div class="number">{{ count_fb_moderate }}</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-7">
-        <div class="card">
-            <div class="header bg-amber admin_card">
-                <h5>Ajouter un Administrateur</h5>
-            </div>
-            <div class="body">
-                Coucou
+        <div class="col-md-4">
+            <div class="info-box-3 bg-amber hover-zoom-effect">
+                <div class="icon">
+                    <i class="material-icons">book</i>
+                </div>
+                <div class="content">
+                    <div class="text">Nombre d'avis publiés</div>
+                    <div class="number">{{ count_fb_online }}</div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-5">
-        <div class="card">
-            <div class="header bg-orange admin_card">
-                <h5>Liste des admnistrateurs</h5>
-            </div>
-            <div class="body">
-                coucou
+        <div class="col-md-4">
+            <div class="info-box-3 bg-yellow hover-zoom-effect">
+                <div class="icon">
+                    <i class="material-icons">security</i>
+                </div>
+                <div class="content">
+                    <div class="text">Nombre d'avis en modération</div>
+                    <div class="number">{{ count_fb_moderate }}</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-7">
-        <div class="card">
-            <div class="header bg-orange admin_card">
-                <h5>Ajouter un Modérateur</h5>
-            </div>
-            <div class="body">
-                Coucou
-            </div>
+    <div class="card">
+        <div class="body table-responsive">
+            <table id="tableauadmin" class="display table table-striped table-bordered table-responsive text-center" style="width:100%">
+                <thead>
+                <tr>
+                    <th class="text-center">Prénom</th>
+                    <th class="text-center">Nom</th>
+                    <th class="text-center">Rôles</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.lastName }}</td>
+                        <td>
+                            {% if user.roles[0] == "ROLE_ADMIN" %}
+                                <i class="material-icons" data-toggle="tooltip" data-placement="bottom" title="Administrateur">build</i>
+                            {% endif %}
+                            {% if user.roles[0] == "ROLE_MODO" %}
+                                <i class="material-icons" data-toggle="tooltip" data-placement="bottom" title="Modérateur">security</i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user.roles[0] == "ROLE_ADMIN" %}
+                                <a href="{{ path('set_modo',{'user_id':user.id}) }}">
+                                    <i class="material-icons btn-amber" data-toggle="tooltip" data-placement="bottom" title="Rétrograder en tant que Modérateur">security</i>
+                                </a>
+                                <a href="{{ path('remove_admin',{'user_id':user.id}) }}">
+                                    <i class="material-icons btn-red" data-toggle="tooltip" data-placement="bottom" title="Destituer">report</i>
+                                </a>
+                            {% elseif user.roles[0] == "ROLE_MODO" %}
+                                <a href="{{ path('set_admin',{'user_id':user.id}) }}">
+                                    <i class="material-icons btn-green" data-toggle="tooltip" data-placement="bottom" title="Nommer administrateur">build</i>
+                                </a>
+                                <a href="{{ path('remove_modo',{'user_id':user.id}) }}">
+                                    <i class="material-icons btn-red" data-toggle="tooltip" data-placement="bottom" title="Destituer">report</i>
+                                </a>
+                            {% elseif user.roles[0] =="ROLE_USER" %}
+                                <a href="{{ path('set_admin',{'user_id':user.id}) }}">
+                                    <i class="material-icons btn-green" data-toggle="tooltip" data-placement="bottom" title="Nommer administrateur">build</i>
+                                </a>
+                                <a href="{{ path('set_modo',{'user_id':user.id}) }}">
+                                    <i class="material-icons btn-green" data-toggle="tooltip" data-placement="bottom" title="Nommer modérateur">security</i>
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="col-md-5">
-        <div class="card">
-            <div class="header bg-amber admin_card">
-                <h5>Liste des Modérateurs</h5>
-            </div>
-            <div class="body">
-                coucou
-            </div>
-        </div>
-    </div>
+
 
 {% endblock %}
