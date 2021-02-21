@@ -46,4 +46,31 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });
 
+require('datatables.net');
+require('datatables.net-bs');
+
+$(document).ready(function() {
+    $('#tableauadmin').DataTable({
+        'paging'      : true,
+        'lengthChange': false,
+        'searching'   : true,
+        'ordering'    : false,
+        'autoWidth'   : true,
+        "dom": '<"top right search"f>t<"left"i><"align-center"p>',
+        "language": {
+            "processing":     "Traitement en cours...",
+            "infoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+            "info": "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+            "search": "Rechercher",
+            "infoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+            "loadingRecords": "Chargement en cours...",
+            "zeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+            "emptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+            "paginate" : {
+                "previous" : "Précédent",
+                "next" : "Suivant"
+            }
+        }
+    });
+} );
 

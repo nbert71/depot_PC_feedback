@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Scalar;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +19,32 @@ class UserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, User::class);
     }
+
+
+    /**
+     * @return Scalar
+     */
+    public function count_user()
+    {
+        return $this->createQueryBuilder('u')
+            ->select("COUNT(u)")
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @return User[]
+     */
+    public function admin_list(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->where('ROLE_ADMIN IN (u.roles)')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
 
     // /**
     //  * @return User[] Returns an array of User objects

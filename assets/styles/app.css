@@ -61,3 +61,8 @@ body {
 .toutpetit{
     font-size: 10px;
 }
+
+.admin_card{
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}

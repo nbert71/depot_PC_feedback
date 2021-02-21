@@ -49,7 +49,7 @@ class User implements UserInterface
     public $confirm_password;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="json_array", nullable=true)
      */
     private $roles = [];
 

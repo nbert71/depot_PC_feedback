@@ -165,6 +165,7 @@ class FeedbackController extends AbstractController
      * @Route("/my_page", name="my_page")
      */
     public function myPage(Request $request, PaginatorInterface $paginator){
+
         $user = $this->getUser();
         $repofb = $this->getDoctrine()->getRepository(Feedback::class);
         $myfb = $paginator->paginate(

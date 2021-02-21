@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+{% block titre_page %}Administration{% endblock %}
+
+
+{% block content %}
+    <h1 class="text-center margin_title_fb">Administration</h1>
+
+    <div class="col-md-4">
+        <div class="info-box-3 bg-orange hover-zoom-effect">
+            <div class="icon">
+                <i class="material-icons">person</i>
+            </div>
+            <div class="content">
+                <div class="text">Nombre d'utilisateurs</div>
+                <div class="number">{{ count_user }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="info-box-3 bg-amber hover-zoom-effect">
+            <div class="icon">
+                <i class="material-icons">book</i>
+            </div>
+            <div class="content">
+                <div class="text">Nombre d'avis publiés</div>
+                <div class="number">{{ count_fb_online }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="info-box-3 bg-yellow hover-zoom-effect">
+            <div class="icon">
+                <i class="material-icons">security</i>
+            </div>
+            <div class="content">
+                <div class="text">Nombre d'avis en modération</div>
+                <div class="number">{{ count_fb_moderate }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <div class="card">
+            <div class="header bg-amber admin_card">
+                <h5>Ajouter un Administrateur</h5>
+            </div>
+            <div class="body">
+                Coucou
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="header bg-orange admin_card">
+                <h5>Liste des admnistrateurs</h5>
+            </div>
+            <div class="body">
+                coucou
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <div class="card">
+            <div class="header bg-orange admin_card">
+                <h5>Ajouter un Modérateur</h5>
+            </div>
+            <div class="body">
+                Coucou
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="header bg-amber admin_card">
+                <h5>Liste des Modérateurs</h5>
+            </div>
+            <div class="body">
+                coucou
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
