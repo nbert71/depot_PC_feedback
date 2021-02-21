@@ -48,13 +48,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ path('my_page') }}" data-toggle="tooltip" data-placement="bottom" title="Tableau de bord">
-                            <i class="material-icons">dashboard</i>
+                        <a href="{{ path('new_feedback') }}" data-toggle="tooltip" data-placement="bottom" title="Ajouter un avis">
+                            <i class="material-icons">add</i>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ path('new_feedback') }}" data-toggle="tooltip" data-placement="bottom" title="Ajouter un avis">
-                            <i class="material-icons">add</i>
+                        <a href="{{ path('my_page') }}" data-toggle="tooltip" data-placement="bottom" title="Tableau de bord">
+                            <i class="material-icons">dashboard</i>
                         </a>
                     </li>
                     {% if is_granted("ROLE_MODO") %}
