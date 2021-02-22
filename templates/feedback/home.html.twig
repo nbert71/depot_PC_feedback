@@ -7,8 +7,8 @@
 
     <div class="col-md-7">
         <div class="card">
-            <div class="header header_home bg-orange">
-                <h4>Derniers feedbacks ajoutés</h4>
+            <div class="header header_home bg-2">
+                <h4 class="text-white">Derniers feedbacks ajoutés</h4>
             </div>
             {% for feedback in feedbacks %}
                 <li class="list-group-item">
@@ -70,7 +70,7 @@
     </div>
 
     <div class="col-md-5 col-md-offset-0">
-        <div class="info-box bg-teal hover-expand-effect">
+        <div class="info-box bg-4 hover-expand-effect">
             <div class="icon">
                 <i class="material-icons">book</i>
             </div>
@@ -83,14 +83,14 @@
 
     <div class="col-md-5">
     <div class="card">
-        <div class="header header_home bg-orange">
-            <h4>Les meilleurs cours</h4>
+        <div class="header header_home bg-2">
+            <h4 class="text-white">Les meilleurs cours</h4>
         </div>
         <div class="list-group">
             {% for course in courses %}
                 <li class="list-group-item">
                     <a href="{{ path('course_show', {course_id: course.id}) }}">{{ course.name }}</a>
-                    <span class="badge bg-teal">{{ course.1|number_format(2) }} / 5</span>
+                    <span class="badge bg-4">{{ course.1|number_format(2) }} / 5</span>
                 </li>
             {% endfor %}
         </div>

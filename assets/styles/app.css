@@ -78,3 +78,31 @@ body {
 .btn-red{
     color: red;
 }
+
+.bg-0{
+    background-color: #03394F !important;
+}
+
+.bg-1{
+    background-color: #05668D !important;
+}
+
+.bg-2{
+    background-color: #089DD9 !important;
+}
+
+.bg-3{
+    background-color: #26BCF7 !important;
+}
+
+.bg-4{
+    background-color: #75D4FA !important;
+}
+
+.bg-5{
+    background: #C4EDFD !important;
+}
+
+.text-white{
+    color: white !important;
+}

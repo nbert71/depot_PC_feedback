@@ -7,8 +7,8 @@
 {% block content %}
     <div class="col-md-8 col-md-offset-2">
         <div class="card">
-            <div class="header text-center bg-orange">
-                <h2>{% if edit == true %}
+            <div class="header text-center bg-2">
+                <h2 class="text-white">{% if edit == true %}
                         Modifier un avis
                     {% else %}
                         Déposer un avis
@@ -45,7 +45,7 @@
                     Avis *
                 </div>
                 {{ form_row(form.comment, {'placeholder': 'Avis'}) }}
-                <button type="submit" class="btn bg-teal center-block">
+                <button type="submit" class="btn bg-4 center-block">
                     {% if edit == true %}
                         Modifier
                     {% else %}
