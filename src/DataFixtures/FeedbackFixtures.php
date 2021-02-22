@@ -71,7 +71,7 @@ class FeedbackFixtures extends Fixture
                         ->setTitle($faker->realText($maxNbChars = 20, $indexSize = 2))
                         ->setComment($faker->realText($maxNbChars = 100, $indexSize = 4))
                         ->setOverall(mt_rand(0, 5))
-                        ->setDifficulty(mt_rand(0, 5))
+                        ->setFacility(mt_rand(0, 5))
                         ->setInterest(mt_rand(0, 5))
                         ->setValid(true);
 
