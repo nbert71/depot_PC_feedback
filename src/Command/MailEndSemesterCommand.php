@@ -54,7 +54,7 @@ class MailEndSemesterCommand extends Command
                         'text/html'
                     );
                 $this->mailer->send($message);
-                echo('mail envoyé');
+                //echo('mail envoyé');
 
         }
 
