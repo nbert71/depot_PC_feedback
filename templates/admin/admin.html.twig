@@ -54,6 +54,7 @@
 
                 <tbody>
                 {% for user in users %}
+                    {% if user != userOnline %}
                     <tr>
                         <td>{{ user.firstName }}</td>
                         <td>{{ user.lastName }}</td>
@@ -67,29 +68,30 @@
                         </td>
                         <td>
                             {% if user.roles[0] == "ROLE_ADMIN" %}
-                                <a href="{{ path('set_modo',{'user_id':user.id}) }}">
+                                <a href="{{ path('set_modo',{'id':user.id}) }}">
                                     <i class="material-icons btn-amber" data-toggle="tooltip" data-placement="bottom" title="Rétrograder en tant que Modérateur">security</i>
                                 </a>
-                                <a href="{{ path('remove_admin',{'user_id':user.id}) }}">
+                                <a href="{{ path('remove_admin',{'id':user.id}) }}">
                                     <i class="material-icons btn-red" data-toggle="tooltip" data-placement="bottom" title="Destituer">report</i>
                                 </a>
                             {% elseif user.roles[0] == "ROLE_MODO" %}
-                                <a href="{{ path('set_admin',{'user_id':user.id}) }}">
+                                <a href="{{ path('set_admin',{'id':user.id}) }}">
                                     <i class="material-icons btn-green" data-toggle="tooltip" data-placement="bottom" title="Nommer administrateur">build</i>
                                 </a>
-                                <a href="{{ path('remove_modo',{'user_id':user.id}) }}">
+                                <a href="{{ path('remove_modo',{'id':user.id}) }}">
                                     <i class="material-icons btn-red" data-toggle="tooltip" data-placement="bottom" title="Destituer">report</i>
                                 </a>
                             {% elseif user.roles[0] =="ROLE_USER" %}
-                                <a href="{{ path('set_admin',{'user_id':user.id}) }}">
+                                <a href="{{ path('set_admin',{'id':user.id}) }}">
                                     <i class="material-icons btn-green" data-toggle="tooltip" data-placement="bottom" title="Nommer administrateur">build</i>
                                 </a>
-                                <a href="{{ path('set_modo',{'user_id':user.id}) }}">
+                                <a href="{{ path('set_modo',{'id':user.id}) }}">
                                     <i class="material-icons btn-green" data-toggle="tooltip" data-placement="bottom" title="Nommer modérateur">security</i>
                                 </a>
                             {% endif %}
                         </td>
                     </tr>
+                    {% endif %}
                 {% endfor %}
                 </tbody>
             </table>

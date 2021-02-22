@@ -41,7 +41,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/set_admin/{user_id}", name="set_admin")
+     * @Route("/set_admin/{id}", name="set_admin")
      */
     public function setAdmin(User $user)
     {
@@ -52,12 +52,13 @@ class AdminController extends AbstractController
 
         $this->addFlash(
             'success',
-            ($user->getFirstName()) . ($user->getLastName()) . 'a bien été promu administrateur.'
+            ($user->getFirstName()) . ' ' . ($user->getLastName()) . ' a bien été promu(e) administrateur.'
         );
+        return $this->redirectToRoute('admin_menu');
     }
 
     /**
-     * @Route("/remove_admin/{user_id}", name="remove_admin")
+     * @Route("/remove_admin/{id}", name="remove_admin")
      */
     public function removeAdmin(User $user)
     {
@@ -77,19 +78,21 @@ class AdminController extends AbstractController
                     'success',
                     "L'utilisateur a bien été destitué."
                 );
+
             }
         }else{
             $this->addFlash(
                 'warning',
-                ($user->getFirstName()) . ($user->getLastName()) . "n'est pas un administrateur."
+                ($user->getFirstName()) . ' ' . ($user->getLastName()) . " n'est pas un administrateur."
             );
         }
 
+        return $this->redirectToRoute('admin_menu');
     }
 
 
     /**
-     * @Route("/set_modo/{user_id}", name="set_modo")
+     * @Route("/set_modo/{id}", name="set_modo")
      */
     public function setModo(User $user)
     {
@@ -100,12 +103,14 @@ class AdminController extends AbstractController
 
         $this->addFlash(
             'success',
-            ($user->getFirstName()) . ($user->getLastName()) . 'a bien été promu modérateur.'
+            ($user->getFirstName()) . ' '. ($user->getLastName()) . ' a bien été promu modérateur.'
         );
+        return $this->redirectToRoute('admin_menu');
+
     }
 
     /**
-     * @Route("/remove_modo/{user_id}", name="remove_modo")
+     * @Route("/remove_modo/{id}", name="remove_modo")
      */
     public function removeModo(User $user)
     {
@@ -122,9 +127,10 @@ class AdminController extends AbstractController
         }else{
             $this->addFlash(
                 'warning',
-                ($user->getFirstName()) . ($user->getLastName()) . "n'est pas un modérateur."
+                ($user->getFirstName()) . ' ' . ($user->getLastName()) . " n'est pas un modérateur."
             );
         }
+        return $this->redirectToRoute('admin_menu');
 
     }
 }
